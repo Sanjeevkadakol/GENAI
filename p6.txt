@@ -1,0 +1,19 @@
+#program 6: Implement a cloud-based AI system that evaluates resumes automatically that uses a cloud LLM API
+#(Gemini-3) to generate a structured evaluation paragraph with score, strengths, gaps, and improvement
+#suggestions.
+
+!pip install google-generativeai PyPDF2 -q
+
+import google.generativeai as genai
+
+genai.configure(api_key="AIzaSyDcXFi3JT-0Nb010NHFpv-GZg2Fdn3tXTA")
+
+model = genai.GenerativeModel("gemini-1.5-flash")
+
+resume = "Python developer with AI skills"
+
+prompt = f"Evaluate this resume: {resume}"
+
+response = model.generate_content(prompt)
+
+print(response.text)

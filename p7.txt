@@ -1,0 +1,27 @@
+#program 7 :Design and implement a Retrieval-Augmented Generation (RAG) chatbot that answers user queries
+#only from the content of an uploaded document. The system should combine document retrieval with
+#language generation to provide contextually accurate answers
+
+!pip install sentence-transformers faiss-cpu -q
+
+from sentence_transformers import SentenceTransformer
+import faiss
+import numpy as np
+
+docs = ["AI is intelligence shown by machines"]
+
+model = SentenceTransformer('all-MiniLM-L6-v2')
+
+embeddings = model.encode(docs)
+
+index = faiss.IndexFlatL2(embeddings.shape[1])
+
+index.add(np.array(embeddings))
+
+query = "What is AI?"
+
+q = model.encode([query])
+
+D, I = index.search(np.array(q), 1)
+
+print(docs[I[0][0]])

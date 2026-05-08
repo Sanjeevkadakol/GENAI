@@ -1,0 +1,10 @@
+#p1
+!pip install transformers torch -q
+
+from transformers import pipeline
+
+generator = pipeline("text-generation", model="gpt2")
+
+text = generator("Artificial Intelligence is", max_length=30)
+
+print(text[0]['generated_text'])
