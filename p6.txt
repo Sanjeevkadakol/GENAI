@@ -2,18 +2,23 @@
 #(Gemini-3) to generate a structured evaluation paragraph with score, strengths, gaps, and improvement
 #suggestions.
 
-!pip install google-generativeai PyPDF2 -q
+!pip install -q openai
 
-import google.generativeai as genai
+from openai import OpenAI
 
-genai.configure(api_key="your_api_key")
+client = OpenAI(
+    base_url="",
+    api_key=""
+)
 
-model = genai.GenerativeModel("gemini-1.5-flash")
+response = client.chat.completions.create(
+    model="openai/gpt-3.5-turbo",
+    messages=[
+        {
+            "role": "user",
+            "content": "Evaluate this resume: Python developer with AI skills"
+        }
+    ]
+)
 
-resume = "Python developer with AI skills"
-
-prompt = f"Evaluate this resume: {resume}"
-
-response = model.generate_content(prompt)
-
-print(response.text)
+print(response.choices[0].message.content)
